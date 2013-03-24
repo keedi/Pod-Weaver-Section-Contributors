@@ -26,19 +26,19 @@ has contributors => (
 
 sub weave_section {
     my ($self, $document, $input) = @_;
-    my $contributors = [];
+    my @contributors;
 
     ## 1- get contributors passed to Pod::Weaver::Section::Contributors
-    push (@{$contributors}, @{$self->contributors});
+    push (@contributors, @{$self->contributors});
 
     ## 2 - get contributors passed to Dist::Zilla::Stash::PodWeaver
-    push (@{$contributors}, @{$input->{contributors}}) if $input->{contributors};
+    push (@contributors, @{$input->{contributors}}) if $input->{contributors};
     if ( $input->{zilla} ) {
         my $stash = $input->{zilla}->stash_named('%PodWeaver');
         my ($config, $contri);
         $config = $stash->get_stashed_config($self) if $stash;
         $contri = $config->{contributors}           if $config;
-        push (@{$contributors}, @{$contri})         if $contri;
+        push (@contributors, @{$contri})         if $contri;
     }
 
     ## 3 - get contributors from source comments
@@ -47,30 +47,24 @@ sub weave_section {
         my $ppi_node = $_[1];
         if ($ppi_node->isa('PPI::Token::Comment') &&
             $ppi_node->content =~ qr/^\s*#+\s*CONTRIBUTORS?:\s*(.+)$/m ) {
-            push (@{$contributors}, $1);
+            push (@contributors, $1);
         }
         return 0;
     });
 
     ## 4 - remove repeated names, and sort them alphabetically
-    @{$contributors} = List::MoreUtils::uniq (@{$contributors});
-    @{$contributors} = sort (@{$contributors});
+    @contributors = List::MoreUtils::uniq (@contributors);
+    @contributors = sort (@contributors);
 
-    return unless $contributors;
-
-    $contributors = [ $contributors ] unless ref $contributors;
-
-    return unless $contributors->length;
-
-    my $multiple_contributors = $contributors->length > 1;
-
+    return unless @contributors;
+    my $multiple_contributors = @contributors > 1;
     my $name = $multiple_contributors ? 'CONTRIBUTORS' : 'CONTRIBUTOR';
 
-    my $result = $contributors->map(sub {
+    my $result = [map {
         Pod::Elemental::Element::Pod5::Ordinary->new({
             content => $_,
         }),
-    });
+    } @contributors];
 
     $result = [
         Pod::Elemental::Element::Pod5::Command->new({
