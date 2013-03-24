@@ -2,6 +2,7 @@ package Pod::Weaver::Section::Contributors;
 use Moose;
 with 'Pod::Weaver::Role::Section';
 # ABSTRACT: a section listing contributors
+# CONTRIBUTOR: Carnë Draug <cdraug@cpan.org>
 
 use Moose::Autobox;
 
@@ -13,20 +14,41 @@ sub mvp_multivalue_args { qw( contributors ) }
 has contributors => (
     is      => 'ro',
     isa     => 'ArrayRef[Str]',
+    lazy    => 1,
     default => sub{ [] },
 );
 
 sub weave_section {
     my ($self, $document, $input) = @_;
+    my $contributors = [];
 
-    my $contributors = $self->contributors;
-    $contributors = $input->{contributors} if $input && $input->{contributors};
-    if ( $input && $input->{zilla} ) {
+    ## 1- get contributors passed to Pod::Weaver::Section::Contributors
+    push (@{$contributors}, @{$self->contributors});
+
+    ## 2 - get contributors passed to Dist::Zilla::Stash::PodWeaver
+    push (@{$contributors}, @{$input->{contributors}}) if $input->{contributors};
+    if ( $input->{zilla} ) {
         my $stash = $input->{zilla}->stash_named('%PodWeaver');
-        my $config;
+        my ($config, $contri);
         $config = $stash->get_stashed_config($self) if $stash;
-        $contributors = $config->{contributors}     if $config;
+        $contri = $config->{contributors}           if $config;
+        push (@{$contributors}, @{$contri})         if $contri;
     }
+
+    ## 3 - get contributors from source comments
+    my $ppi_document = $input->{ppi_document};
+    $ppi_document->find( sub {
+        my $ppi_node = $_[1];
+        if ($ppi_node->isa('PPI::Token::Comment') &&
+            $ppi_node->content =~ qr/^\s*#+\s*CONTRIBUTORS?:\s*(.+)$/m ) {
+            push (@{$contributors}, $1);
+        }
+        return 0;
+    });
+
+    ## 4 - remove repeated names, and sort them alphabetically
+    @{$contributors} = List::MoreUtils::uniq (@{$contributors});
+    @{$contributors} = sort (@{$contributors});
 
     return unless $contributors;
 
@@ -77,17 +99,23 @@ __END__
 
 =head1 SYNOPSIS
 
-dist.ini:
+on dist.ini:
 
     [PodWeaver]
     [%PodWeaver]
     Contributors.contributors[0] = Keedi Kim (KEEDI)
     Contributors.contributors[1] = Jeen Lee (JEEN)
 
-weaver.ini:
+and/or weaver.ini:
 
     [Contributors]
+    contributors = Keedi Kim (KEEDI)
+    contributors = Jeen Lee (JEEN)
 
+and/or in the source of individual files:
+
+    # CONTRIBUTOR:  Keedi Kim (KEEDI)
+    # CONTRIBUTORS: Jeen Lee (JEEN)
 
 =head1 DESCRIPTION
 
@@ -100,6 +128,9 @@ given, it will do nothing.  Otherwise, it produces a hunk like this:
     Contributor One <a1@example.com>
     Contributor Two <a2@example.com>
 
+To support distributions with multiple modules, it is also able to derive a list
+of contributors in a file basis by looking at comments on each module. Names of
+contributors on the source, will only appear on the POD of those modules.
 
 =head1 SEE ALSO
 
