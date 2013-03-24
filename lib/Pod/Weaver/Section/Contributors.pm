@@ -9,6 +9,9 @@ use Moose::Autobox;
 use Pod::Elemental::Element::Nested;
 use Pod::Elemental::Element::Pod5::Verbatim;
 
+=for Pod::Coverage mvp_multivalue_args
+=cut
+
 sub mvp_multivalue_args { qw( contributors ) }
 
 has contributors => (
@@ -17,6 +20,9 @@ has contributors => (
     lazy    => 1,
     default => sub{ [] },
 );
+
+=for Pod::Coverage weave_section
+=cut
 
 sub weave_section {
     my ($self, $document, $input) = @_;
