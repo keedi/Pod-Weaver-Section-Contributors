@@ -2,7 +2,6 @@ package Pod::Weaver::Section::Contributors;
 use Moose;
 with 'Pod::Weaver::Role::Section';
 # ABSTRACT: a section listing contributors
-# CONTRIBUTOR: Carnë Draug <cdraug@cpan.org>
 
 use Moose::Autobox;
 
@@ -106,19 +105,19 @@ on dist.ini:
 
     [PodWeaver]
     [%PodWeaver]
-    Contributors.contributors[0] = Keedi Kim (KEEDI)
-    Contributors.contributors[1] = Jeen Lee (JEEN)
+    Contributors.contributors[0] = keedi - Keedi Kim - 김도형 (cpan: KEEDI) <keedi@cpan.org>
+    Contributors.contributors[1] = carandraug - Carnë Draug (cpan: CDRAUG) <cdraug@cpan.org>
 
 and/or weaver.ini:
 
     [Contributors]
-    contributors = Keedi Kim (KEEDI)
-    contributors = Jeen Lee (JEEN)
+    contributors = keedi - Keedi Kim - 김도형 (cpan: KEEDI) <keedi@cpan.org>
+    contributors = carandraug - Carnë Draug (cpan: CDRAUG) <cdraug@cpan.org>
 
 and/or in the source of individual files:
 
-    # CONTRIBUTOR:  Keedi Kim (KEEDI)
-    # CONTRIBUTORS: Jeen Lee (JEEN)
+    # CONTRIBUTOR:  keedi - Keedi Kim - 김도형 (cpan: KEEDI) <keedi@cpan.org>
+    # CONTRIBUTORS: carandraug - Carnë Draug (cpan: CDRAUG) <cdraug@cpan.org>
 
 =head1 DESCRIPTION
 
@@ -126,7 +125,7 @@ This section adds a listing of the documents contributors.  It expects a C<contr
 input parameter to be an arrayref of strings.  If no C<contributors> parameter is
 given, it will do nothing.  Otherwise, it produces a hunk like this:
 
-  =head1 CONTRIBUTORS
+    =head1 CONTRIBUTORS
 
     Contributor One <a1@example.com>
     Contributor Two <a2@example.com>
