@@ -1,5 +1,11 @@
 Release history for Pod-Weaver-Section-Contributors
 
+0.002   2013-03-25 15:07:22 Asia/Seoul
+    - Merge contributors names on weaver.ini and dist.ini rather than
+      overriding weaver.ini. (CDRAUG)
+    - Implemented catching of contributors names from comments in the
+      source. (CDRAUG)
+    - It now removes repeated names of contributors. (CDRAUG)
+
 0.001   2012-06-19 04:22:31 Asia/Seoul
     First version, released on unsuspecting world.
-
