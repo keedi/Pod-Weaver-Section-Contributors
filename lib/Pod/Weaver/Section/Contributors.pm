@@ -28,11 +28,14 @@ sub weave_section {
     my ($self, $document, $input) = @_;
     my @contributors;
 
-    ## 1- get contributors passed to Pod::Weaver::Section::Contributors
+    ## 1 - get contributors from $input parameter of weave_section()
+    push (@contributors, @{$input->{contributors}})
+        if $input->{contributors} && ref($input->{contributors}) eq 'ARRAY';
+
+    ## 2 - get contributors passed to Pod::Weaver::Section::Contributors
     push (@contributors, @{$self->contributors});
 
-    ## 2 - get contributors passed to Dist::Zilla::Stash::PodWeaver
-    push (@contributors, @{$input->{contributors}}) if $input->{contributors};
+    ## 3 - get contributors passed to Dist::Zilla::Stash::PodWeaver
     if ( $input->{zilla} ) {
         my $stash = $input->{zilla}->stash_named('%PodWeaver');
         my ($config, $contri);
@@ -41,7 +44,7 @@ sub weave_section {
         push (@contributors, @{$contri})         if $contri;
     }
 
-    ## 3 - get contributors from source comments
+    ## 4 - get contributors from source comments
     my $ppi_document = $input->{ppi_document};
     $ppi_document->find( sub {
         my $ppi_node = $_[1];
@@ -52,7 +55,7 @@ sub weave_section {
         return 0;
     });
 
-    ## 4 - remove repeated names, and sort them alphabetically
+    ## 5 - remove repeated names, and sort them alphabetically
     @contributors = List::MoreUtils::uniq (@contributors);
     @contributors = sort (@contributors);
 
