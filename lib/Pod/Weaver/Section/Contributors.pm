@@ -31,6 +31,15 @@ has head => (
 
 sub mvp_multivalue_args { qw( contributors ) }
 
+=attr contributors
+
+The list of contributors.
+
+In case the value is passed to C<weave_section()>, to Pod::Weaver
+and to the Pod::Weaver stash, it merges all contributors.
+
+=cut
+
 has contributors => (
     is      => 'ro',
     isa     => 'ArrayRef[Str]',
