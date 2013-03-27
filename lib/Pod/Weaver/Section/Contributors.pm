@@ -136,12 +136,14 @@ on dist.ini:
 
     [PodWeaver]
     [%PodWeaver]
+    Contributors.head = 2
     Contributors.contributors[0] = keedi - Keedi Kim - 김도형 (cpan: KEEDI) <keedi@cpan.org>
     Contributors.contributors[1] = carandraug - Carnë Draug (cpan: CDRAUG) <cdraug@cpan.org>
 
 and/or weaver.ini:
 
     [Contributors]
+    head = 2
     contributors = keedi - Keedi Kim - 김도형 (cpan: KEEDI) <keedi@cpan.org>
     contributors = carandraug - Carnë Draug (cpan: CDRAUG) <cdraug@cpan.org>
 
