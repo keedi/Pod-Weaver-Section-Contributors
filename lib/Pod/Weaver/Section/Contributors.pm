@@ -180,6 +180,16 @@ contributors on the source, will only appear on the POD of those modules.
 
 =over
 
+=item L<dagolden's 'How I'm using Dist::Zilla to give credit to contributors'|http://www.dagolden.com/index.php/1921/how-im-using-distzilla-to-give-credit-to-contributors/>
+
+=item L<Dist::Zilla::Plugin::ContributorsFromGit>
+
+=item L<Dist::Zilla::Stash::Contributors>
+
+=item L<Dist::Zilla::Plugin::Meta::Contributors>
+
+=item L<Dist::Zilla::Plugin::ContributorsFile>
+
 =item L<Dist::Zilla>
 
 =item L<Dist::Zilla::Role::Stash::Plugins>
