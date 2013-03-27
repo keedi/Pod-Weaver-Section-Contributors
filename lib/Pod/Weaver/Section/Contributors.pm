@@ -178,17 +178,16 @@ contributors on the source, will only appear on the POD of those modules.
 
 =head1 SEE ALSO
 
-=over
-
-=item L<Dist::Zilla>
-
-=item L<Dist::Zilla::Role::Stash::Plugins>
-
-=item L<Pod::Weaver>
-
-=item L<Pod::Weaver::Section::Authors>
-
-=back
+=for :list
+* L<dagolden's 'How I'm using Dist::Zilla to give credit to contributors'|http://www.dagolden.com/index.php/1921/how-im-using-distzilla-to-give-credit-to-contributors/>
+* L<Dist::Zilla::Plugin::ContributorsFromGit>
+* L<Dist::Zilla::Stash::Contributors>
+* L<Dist::Zilla::Plugin::Meta::Contributors>
+* L<Dist::Zilla::Plugin::ContributorsFile>
+* L<Dist::Zilla>
+* L<Dist::Zilla::Role::Stash::Plugins>
+* L<Pod::Weaver>
+* L<Pod::Weaver::Section::Authors>
 
 
 =cut
