@@ -1,6 +1,6 @@
 Release history for Pod-Weaver-Section-Contributors
 
-{{$NEXT}}
+0.003   2013-03-27 11:35:00 Asia/Seoul
     - New option to specify the heading level (if any) of the inserted text.
       Suggested by ETHER. (CDRAUG)
 

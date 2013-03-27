@@ -4,7 +4,7 @@ Pod::Weaver::Section::Contributors - a section listing contributors
 
 # VERSION
 
-version 0.002
+version 0.003
 
 # SYNOPSIS
 
@@ -12,12 +12,14 @@ on dist.ini:
 
     [PodWeaver]
     [%PodWeaver]
+    Contributors.head = 2
     Contributors.contributors[0] = keedi - Keedi Kim - 김도형 (cpan: KEEDI) <keedi@cpan.org>
     Contributors.contributors[1] = carandraug - Carnë Draug (cpan: CDRAUG) <cdraug@cpan.org>
 
 and/or weaver.ini:
 
     [Contributors]
+    head = 2
     contributors = keedi - Keedi Kim - 김도형 (cpan: KEEDI) <keedi@cpan.org>
     contributors = carandraug - Carnë Draug (cpan: CDRAUG) <cdraug@cpan.org>
 
@@ -41,8 +43,30 @@ To support distributions with multiple modules, it is also able to derive a list
 of contributors in a file basis by looking at comments on each module. Names of
 contributors on the source, will only appear on the POD of those modules.
 
+# ATTRIBUTES
+
+## head
+
+The heading level of this section.  If 0, it inserts an ordinary piece of text
+with no heading. Defaults to 1.
+
+In case the value is passed both to Pod::Weaver and to the Pod::Weaver stash,
+it uses the value found in the stash.
+
+## contributors
+
+The list of contributors.
+
+In case the value is passed to `weave_section()`, to Pod::Weaver
+and to the Pod::Weaver stash, it merges all contributors.
+
 # SEE ALSO
 
+- [dagolden's 'How I'm using Dist::Zilla to give credit to contributors'](http://www.dagolden.com/index.php/1921/how-im-using-distzilla-to-give-credit-to-contributors/)
+- [Dist::Zilla::Plugin::ContributorsFromGit](http://search.cpan.org/perldoc?Dist::Zilla::Plugin::ContributorsFromGit)
+- [Dist::Zilla::Stash::Contributors](http://search.cpan.org/perldoc?Dist::Zilla::Stash::Contributors)
+- [Dist::Zilla::Plugin::Meta::Contributors](http://search.cpan.org/perldoc?Dist::Zilla::Plugin::Meta::Contributors)
+- [Dist::Zilla::Plugin::ContributorsFile](http://search.cpan.org/perldoc?Dist::Zilla::Plugin::ContributorsFile)
 - [Dist::Zilla](http://search.cpan.org/perldoc?Dist::Zilla)
 - [Dist::Zilla::Role::Stash::Plugins](http://search.cpan.org/perldoc?Dist::Zilla::Role::Stash::Plugins)
 - [Pod::Weaver](http://search.cpan.org/perldoc?Pod::Weaver)
@@ -52,9 +76,10 @@ contributors on the source, will only appear on the POD of those modules.
 
 Keedi Kim - 김도형 <keedi@cpan.org>
 
-# CONTRIBUTOR
+# CONTRIBUTORS
 
-carandraug - Carnë Draug (cpan: CDRAUG) <cdraug@cpan.org>
+- carandraug - Carnë Draug (cpan: CDRAUG) <cdraug@cpan.org>
+- ether - Karen Etheridge (cpan: ETHER) <ether@cpan.org>
 
 # COPYRIGHT AND LICENSE
 
