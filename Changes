@@ -2,6 +2,7 @@ Release history for Pod-Weaver-Section-Contributors
 
 {{$NEXT}}
     - New option to specify the heading level (if any) of the inserted text.
+      Suggested by ETHER. (CDRAUG)
 
 0.002   2013-03-25 15:07:22 Asia/Seoul
     - Merge contributors names on weaver.ini and dist.ini rather than
