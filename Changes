@@ -1,5 +1,9 @@
 Release history for Pod-Weaver-Section-Contributors
 
+0.004   2013-05-10 16:39:14 Asia/Seoul
+    - contributor names are added back into [%PodWeaver] for
+      Pod::Weaver::Plugin::StopWords (ETHER)
+
 0.003   2013-03-27 11:35:00 Asia/Seoul
     - New option to specify the heading level (if any) of the inserted text.
       Suggested by ETHER. (CDRAUG)
