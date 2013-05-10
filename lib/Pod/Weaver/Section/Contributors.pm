@@ -83,6 +83,25 @@ sub weave_section {
     @contributors = sort (@contributors);
 
     return unless @contributors;
+
+    ## 6 - add contributors to the stash as stopwords
+    if ( $input->{zilla} ) {
+        my $stash = $self->zilla->stash_named('%PodWeaver');
+        do { $stash = PodWeaver->new; $self->_register_stash('%PodWeaver', $stash) }
+            unless defined $stash;
+        my $config = $stash->_config;
+
+        my @stopwords = uniq
+            map { split / /        }
+            map { /^(.*) <.*$/; $1 }
+            @contributors;
+        my $i = 0;
+        # TODO: use the proper API (not yet written) to add this data
+        do { $config->{"-StopWords.include[$i]"} = $_; $i++ }
+            for @stopwords;
+    }
+
+
     my $multiple_contributors = @contributors > 1;
     my $name = $multiple_contributors ? 'CONTRIBUTORS' : 'CONTRIBUTOR';
 
