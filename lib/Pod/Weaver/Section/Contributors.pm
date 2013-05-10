@@ -4,6 +4,7 @@ with 'Pod::Weaver::Role::Section';
 # ABSTRACT: a section listing contributors
 
 use Moose::Autobox;
+use List::MoreUtils 'uniq';
 
 use Pod::Elemental::Element::Nested;
 use Pod::Elemental::Element::Pod5::Verbatim;
@@ -41,7 +42,7 @@ and to the Pod::Weaver stash, it merges all contributors.
 =cut
 
 has contributors => (
-    is      => 'ro',
+    is      => 'rw',
     isa     => 'ArrayRef[Str]',
     lazy    => 1,
     default => sub{ [] },
@@ -52,23 +53,19 @@ has contributors => (
 
 sub weave_section {
     my ($self, $document, $input) = @_;
-    my @contributors;
 
-    ## 1 - get contributors from $input parameter of weave_section()
-    push (@contributors, @{$input->{contributors}})
-        if $input->{contributors} && ref($input->{contributors}) eq 'ARRAY';
-
-    ## 2 - get contributors passed to Pod::Weaver::Section::Contributors
-    push (@contributors, @{$self->contributors});
-
-    ## 3 - get contributors passed to Dist::Zilla::Stash::PodWeaver
+    ## 1 - add contributors passed to Dist::Zilla::Stash::PodWeaver
     if ( $input->{zilla} ) {
         my $stash = $input->{zilla}->stash_named('%PodWeaver');
-        my ($config, $contri);
-        $config = $stash->get_stashed_config($self) if $stash;
-        $contri = $config->{contributors}           if $config;
-        push (@contributors, @{$contri})            if $contri;
+        $stash->merge_stashed_config($self);
     }
+
+    ## 2 - get contributors passed to Pod::Weaver::Section::Contributors
+    my @contributors = @{$self->contributors};
+
+    ## 3 - get contributors from $input parameter of weave_section()
+    push(@contributors, @{$input->{contributors}})
+        if $input->{contributors} && ref($input->{contributors}) eq 'ARRAY';
 
     ## 4 - get contributors from source comments
     my $ppi_document = $input->{ppi_document};
@@ -82,10 +79,29 @@ sub weave_section {
     });
 
     ## 5 - remove repeated names, and sort them alphabetically
-    @contributors = List::MoreUtils::uniq (@contributors);
+    @contributors = uniq (@contributors);
     @contributors = sort (@contributors);
 
     return unless @contributors;
+
+    ## 6 - add contributors to the stash as stopwords
+    if ( $input->{zilla} ) {
+        my $stash = $self->zilla->stash_named('%PodWeaver');
+        do { $stash = PodWeaver->new; $self->_register_stash('%PodWeaver', $stash) }
+            unless defined $stash;
+        my $config = $stash->_config;
+
+        my @stopwords = uniq
+            map { split / /        }
+            map { /^(.*) <.*$/; $1 }
+            @contributors;
+        my $i = 0;
+        # TODO: use the proper API (not yet written) to add this data
+        do { $config->{"-StopWords.include[$i]"} = $_; $i++ }
+            for @stopwords;
+    }
+
+
     my $multiple_contributors = @contributors > 1;
     my $name = $multiple_contributors ? 'CONTRIBUTORS' : 'CONTRIBUTOR';
 
