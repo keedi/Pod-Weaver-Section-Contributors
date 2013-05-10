@@ -57,7 +57,7 @@ sub weave_section {
     ## 1 - add contributors passed to Dist::Zilla::Stash::PodWeaver
     if ( $input->{zilla} ) {
         my $stash = $input->{zilla}->stash_named('%PodWeaver');
-        $stash->merge_stashed_config($self);
+        $stash->merge_stashed_config($self) if $stash;
     }
 
     ## 2 - get contributors passed to Pod::Weaver::Section::Contributors
@@ -85,10 +85,12 @@ sub weave_section {
     return unless @contributors;
 
     ## 6 - add contributors to the stash as stopwords
-    if ( $input->{zilla} ) {
-        my $stash = $self->zilla->stash_named('%PodWeaver');
-        do { $stash = PodWeaver->new; $self->_register_stash('%PodWeaver', $stash) }
-            unless defined $stash;
+    if ( $input->{zilla}
+        and my $stash = $input->{zilla}->stash_named('%PodWeaver')
+    ) {
+        # TODO: no good way yet of registering a stash from a weaver section
+        #do { $stash = PodWeaver->new; $self->_register_stash('%PodWeaver', $stash) }
+        #    unless defined $stash;
         my $config = $stash->_config;
 
         my @stopwords = uniq
