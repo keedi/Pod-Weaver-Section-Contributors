@@ -1,5 +1,8 @@
 Release history for Pod-Weaver-Section-Contributors
 
+0.005   2013-05-12 01:03:34 Asia/Seoul
+    - fix errors when trying to access a non-existent stash (v0.004, ETHER)
+
 0.004   2013-05-10 16:39:14 Asia/Seoul
     - contributor names are added back into [%PodWeaver] for
       Pod::Weaver::Plugin::StopWords (ETHER)
