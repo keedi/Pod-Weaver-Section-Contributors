@@ -48,11 +48,52 @@ has contributors => (
     default => sub{ [] },
 );
 
+=attr all_modules
+
+Enable this if you want to add the CONTRIBUTOR/CONTRIBUTORS section to
+all the modules in a dist, not only the main one. Defaults to false.
+
+In case the value is passed both to Pod::Weaver and to the Pod::Weaver stash,
+it uses the value found in the stash.
+
+=cut
+
+has all_modules => (
+    is      => 'rw',
+    isa     => 'Bool',
+    lazy    => 1,
+    default => 0,
+);
+
 =for Pod::Coverage weave_section
 =cut
 
 sub weave_section {
     my ($self, $document, $input) = @_;
+
+    #
+    # all_modules
+    #
+    #   this code is stealed from Pod::Weaver::Section::Support
+    #
+
+    ## Check if all_modules is found on the stash
+    if ( $input->{zilla} ) {
+        my $stash  = $input->{zilla}->stash_named('%PodWeaver');
+        my $config = $stash->get_stashed_config($self) if $stash;
+
+        $self->all_modules($config->{all_modules})
+            if defined $config && defined $config->{all_modules};
+    }
+
+    ## Is this the main module POD?
+    if ( ! $self->all_modules ) {
+        return if $input->{zilla}->main_module->name ne $input->{filename};
+    }
+
+    #
+    # contributors
+    #
 
     ## 1 - add contributors passed to Dist::Zilla::Stash::PodWeaver
     if ( $input->{zilla} ) {
@@ -103,7 +144,6 @@ sub weave_section {
             for @stopwords;
     }
 
-
     my $multiple_contributors = @contributors > 1;
     my $name = $multiple_contributors ? 'CONTRIBUTORS' : 'CONTRIBUTOR';
 
@@ -127,6 +167,10 @@ sub weave_section {
             command => 'back', content => '',
         }),
     ] if $multiple_contributors;
+
+    #
+    # head
+    #
 
     ## Check if head is found on the stash
     if ( $input->{zilla} ) {

@@ -1,5 +1,10 @@
 Release history for Pod-Weaver-Section-Contributors
 
+0.006   2013-06-13 14:21:39 Asia/Seoul
+    - New option to determine publish the CONTRIBUTOR/CONTRIBUTORS
+      section to all the modules or only the main module.
+      Suggested by THALJEF.
+
 0.005   2013-05-12 01:03:34 Asia/Seoul
     - fix errors when trying to access a non-existent stash (v0.004, ETHER)
 
