@@ -1,5 +1,6 @@
 Release history for Pod-Weaver-Section-Contributors
 
+0.006   2013-06-13 14:21:39 Asia/Seoul
     - New option to determine publish the CONTRIBUTOR/CONTRIBUTORS
       section to all the modules or only the main module.
       Suggested by THALJEF.
