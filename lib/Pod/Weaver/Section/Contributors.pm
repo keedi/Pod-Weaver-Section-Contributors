@@ -123,6 +123,9 @@ sub weave_section {
     @contributors = uniq (@contributors);
     @contributors = sort (@contributors);
 
+    #escape < and > signs around author emails for the Pod
+    s/\<(.*)\>/E\<lt\>$1E\<gt\>/ for @contributors;
+
     return unless @contributors;
 
     ## 6 - add contributors to the stash as stopwords
