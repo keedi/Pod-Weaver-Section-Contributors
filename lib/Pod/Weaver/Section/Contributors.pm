@@ -135,8 +135,8 @@ sub weave_section {
         my $config = $stash->_config;
 
         my @stopwords = uniq
-            map { split / /        }
-            map { /^(.*) <.*$/; $1 }
+            map { $_ ? split / / : ()    }
+            map { /^(.*?)(\s+<.*)?$/; $1 }
             @contributors;
         my $i = 0;
         # TODO: use the proper API (not yet written) to add this data
