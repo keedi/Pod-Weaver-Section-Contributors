@@ -1,5 +1,8 @@
 Release history for Pod-Weaver-Section-Contributors
 
+0.007   2013-12-12 16:58:15 Asia/Seoul
+    - avoid warning message when manipulating stopwords
+
 0.006   2013-06-13 14:21:39 Asia/Seoul
     - New option to determine publish the CONTRIBUTOR/CONTRIBUTORS
       section to all the modules or only the main module.
