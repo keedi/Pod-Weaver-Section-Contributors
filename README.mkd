@@ -4,7 +4,7 @@ Pod::Weaver::Section::Contributors - a section listing contributors
 
 # VERSION
 
-version 0.006
+version 0.007
 
 # SYNOPSIS
 
@@ -71,14 +71,14 @@ it uses the value found in the stash.
 # SEE ALSO
 
 - [dagolden's 'How I'm using Dist::Zilla to give credit to contributors'](http://www.dagolden.com/index.php/1921/how-im-using-distzilla-to-give-credit-to-contributors/)
-- [Dist::Zilla::Plugin::ContributorsFromGit](http://search.cpan.org/perldoc?Dist::Zilla::Plugin::ContributorsFromGit)
-- [Dist::Zilla::Stash::Contributors](http://search.cpan.org/perldoc?Dist::Zilla::Stash::Contributors)
-- [Dist::Zilla::Plugin::Meta::Contributors](http://search.cpan.org/perldoc?Dist::Zilla::Plugin::Meta::Contributors)
-- [Dist::Zilla::Plugin::ContributorsFile](http://search.cpan.org/perldoc?Dist::Zilla::Plugin::ContributorsFile)
-- [Dist::Zilla](http://search.cpan.org/perldoc?Dist::Zilla)
-- [Dist::Zilla::Role::Stash::Plugins](http://search.cpan.org/perldoc?Dist::Zilla::Role::Stash::Plugins)
-- [Pod::Weaver](http://search.cpan.org/perldoc?Pod::Weaver)
-- [Pod::Weaver::Section::Authors](http://search.cpan.org/perldoc?Pod::Weaver::Section::Authors)
+- [Dist::Zilla::Plugin::ContributorsFromGit](https://metacpan.org/pod/Dist::Zilla::Plugin::ContributorsFromGit)
+- [Dist::Zilla::Stash::Contributors](https://metacpan.org/pod/Dist::Zilla::Stash::Contributors)
+- [Dist::Zilla::Plugin::Meta::Contributors](https://metacpan.org/pod/Dist::Zilla::Plugin::Meta::Contributors)
+- [Dist::Zilla::Plugin::ContributorsFile](https://metacpan.org/pod/Dist::Zilla::Plugin::ContributorsFile)
+- [Dist::Zilla](https://metacpan.org/pod/Dist::Zilla)
+- [Dist::Zilla::Role::Stash::Plugins](https://metacpan.org/pod/Dist::Zilla::Role::Stash::Plugins)
+- [Pod::Weaver](https://metacpan.org/pod/Pod::Weaver)
+- [Pod::Weaver::Section::Authors](https://metacpan.org/pod/Pod::Weaver::Section::Authors)
 
 # AUTHOR
 
