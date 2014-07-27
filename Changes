@@ -1,5 +1,7 @@
 Release history for Pod-Weaver-Section-Contributors
 
+    - fix exception that occurs when not run via Dist::Zilla
+
 0.007   2013-12-12 16:58:15 Asia/Seoul
     - avoid warning message when manipulating stopwords
 

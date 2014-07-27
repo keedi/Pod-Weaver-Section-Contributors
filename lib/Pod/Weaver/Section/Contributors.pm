@@ -87,7 +87,7 @@ sub weave_section {
     }
 
     ## Is this the main module POD?
-    if ( ! $self->all_modules ) {
+    if ( $input->{zilla} and ! $self->all_modules ) {
         return if $input->{zilla}->main_module->name ne $input->{filename};
     }
 
