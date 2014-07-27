@@ -247,7 +247,7 @@ contributors on the source, will only appear on the POD of those modules.
 * L<Dist::Zilla::Plugin::Meta::Contributors>
 * L<Dist::Zilla::Plugin::ContributorsFile>
 * L<Dist::Zilla>
-* L<Dist::Zilla::Role::Stash::Plugins>
+* L<Dist::Zilla::Stash::PodWeaver>
 * L<Pod::Weaver>
 * L<Pod::Weaver::Section::Authors>
 
