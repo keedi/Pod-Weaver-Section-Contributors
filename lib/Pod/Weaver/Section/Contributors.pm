@@ -71,44 +71,28 @@ has all_modules => (
 sub weave_section {
     my ($self, $document, $input) = @_;
 
-    #
-    # all_modules
-    #
-    #   this code is stealed from Pod::Weaver::Section::Support
-    #
+    my $stash = $input->{zilla} ? $input->{zilla}->stash_named('%PodWeaver') : undef;
 
-    ## Check if all_modules is found on the stash
-    if ( $input->{zilla} ) {
-        my $stash  = $input->{zilla}->stash_named('%PodWeaver');
-        my $config = $stash->get_stashed_config($self) if $stash;
-
-        $self->all_modules($config->{all_modules})
-            if defined $config && defined $config->{all_modules};
-    }
+    ## get configs ('head', 'contributors', 'all_modules') provided to [%PodWeaver] in dist.ini
+    $stash->merge_stashed_config($self) if $stash;
 
     ## Is this the main module POD?
-    if ( $input->{zilla} and ! $self->all_modules ) {
+    if ( $input->{zilla} && ! $self->all_modules ) {
         return if $input->{zilla}->main_module->name ne $input->{filename};
     }
 
     #
-    # contributors
+    # assemble list of contributors
     #
 
-    ## 1 - add contributors passed to Dist::Zilla::Stash::PodWeaver
-    if ( $input->{zilla} ) {
-        my $stash = $input->{zilla}->stash_named('%PodWeaver');
-        $stash->merge_stashed_config($self) if $stash;
-    }
-
-    ## 2 - get contributors passed to Pod::Weaver::Section::Contributors
+    ## get contributors passed to [%PodWeaver] and Pod::Weaver::Section::Contributors
     my @contributors = @{$self->contributors};
 
-    ## 3 - get contributors from $input parameter of weave_section()
+    ## get contributors from $input parameter of weave_section()
     push(@contributors, @{$input->{contributors}})
         if $input->{contributors} && ref($input->{contributors}) eq 'ARRAY';
 
-    ## 4 - get contributors from source comments
+    ## get contributors from source comments
     my $ppi_document = $input->{ppi_document};
     $ppi_document->find( sub {
         my $ppi_node = $_[1];
@@ -119,16 +103,17 @@ sub weave_section {
         return 0;
     });
 
-    ## 5 - remove repeated names, and sort them alphabetically
+    ## remove repeated names, and sort them alphabetically
     @contributors = uniq (@contributors);
     @contributors = sort (@contributors);
 
     return unless @contributors;
 
-    ## 6 - add contributors to the stash as stopwords
-    if ( $input->{zilla}
-        and my $stash = $input->{zilla}->stash_named('%PodWeaver')
-    ) {
+    #
+    # pass list of contributors to the StopWords plugin via the stash
+    #
+
+    if ( $stash ) {
         # TODO: no good way yet of registering a stash from a weaver section
         #do { $stash = PodWeaver->new; $self->_register_stash('%PodWeaver', $stash) }
         #    unless defined $stash;
@@ -169,16 +154,8 @@ sub weave_section {
     ] if $multiple_contributors;
 
     #
-    # head
+    # create the section at the right level
     #
-
-    ## Check if head is found on the stash
-    if ( $input->{zilla} ) {
-        my $stash  = $input->{zilla}->stash_named('%PodWeaver');
-        my $config = $stash->get_stashed_config($self) if $stash;
-
-        $self->head($config->{head}) if defined $config && defined $config->{head};
-    }
 
     if ( $self->head ) {
         $document->children->push(
