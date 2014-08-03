@@ -92,6 +92,12 @@ sub weave_section {
     push(@contributors, @{$input->{contributors}})
         if $input->{contributors} && ref($input->{contributors}) eq 'ARRAY';
 
+    ## get contributors from Dist::Zilla metadata
+    if ($input->{zilla}
+            and my $_contributors = $input->{zilla}->distmeta->{x_contributors}) {
+        push(@contributors, @$_contributors);
+    }
+
     ## get contributors from source comments
     my $ppi_document = $input->{ppi_document};
     $ppi_document->find( sub {
