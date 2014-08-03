@@ -116,24 +116,8 @@ sub weave_section {
     return unless @contributors;
 
     #
-    # pass list of contributors to the StopWords plugin via the stash
+    # assemble pod elements
     #
-
-    if ( $stash ) {
-        # TODO: no good way yet of registering a stash from a weaver section
-        #do { $stash = PodWeaver->new; $self->_register_stash('%PodWeaver', $stash) }
-        #    unless defined $stash;
-        my $config = $stash->_config;
-
-        my @stopwords = uniq
-            map { $_ ? split / / : ()    }
-            map { /^(.*?)(\s+<.*)?$/; $1 }
-            @contributors;
-        my $i = 0;
-        # TODO: use the proper API (not yet written) to add this data
-        do { $config->{"-StopWords.include[$i]"} = $_; $i++ }
-            for @stopwords;
-    }
 
     my $multiple_contributors = @contributors > 1;
     my $name = $multiple_contributors ? 'CONTRIBUTORS' : 'CONTRIBUTOR';
@@ -158,6 +142,21 @@ sub weave_section {
             command => 'back', content => '',
         }),
     ] if $multiple_contributors;
+
+
+    #
+    # pass list of contributors to the StopWords plugin and Pod::Spell via directives
+    #
+
+    my @stopwords = uniq
+        map { $_ ? split / / : ()    }
+        map { /^(.*?)(\s+<.*)?$/; $1 }
+        @contributors;
+
+    unshift @$result, Pod::Elemental::Element::Pod5::Command->new({
+        command => 'for', content => join(' ', 'stopwords', @stopwords),
+    });
+
 
     #
     # create the section at the right level
