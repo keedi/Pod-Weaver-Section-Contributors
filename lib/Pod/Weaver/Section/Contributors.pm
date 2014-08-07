@@ -109,9 +109,8 @@ sub weave_section {
         return 0;
     });
 
-    ## remove repeated names, and sort them alphabetically
+    ## remove repeated names
     @contributors = uniq (@contributors);
-    @contributors = sort (@contributors);
 
     return unless @contributors;
 
