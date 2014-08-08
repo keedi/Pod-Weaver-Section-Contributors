@@ -4,7 +4,7 @@ Pod::Weaver::Section::Contributors - a section listing contributors
 
 # VERSION
 
-version 0.007
+version 0.008
 
 # SYNOPSIS
 
@@ -76,7 +76,7 @@ it uses the value found in the stash.
 - [Dist::Zilla::Plugin::Meta::Contributors](https://metacpan.org/pod/Dist::Zilla::Plugin::Meta::Contributors)
 - [Dist::Zilla::Plugin::ContributorsFile](https://metacpan.org/pod/Dist::Zilla::Plugin::ContributorsFile)
 - [Dist::Zilla](https://metacpan.org/pod/Dist::Zilla)
-- [Dist::Zilla::Role::Stash::Plugins](https://metacpan.org/pod/Dist::Zilla::Role::Stash::Plugins)
+- [Dist::Zilla::Stash::PodWeaver](https://metacpan.org/pod/Dist::Zilla::Stash::PodWeaver)
 - [Pod::Weaver](https://metacpan.org/pod/Pod::Weaver)
 - [Pod::Weaver::Section::Authors](https://metacpan.org/pod/Pod::Weaver::Section::Authors)
 
@@ -92,7 +92,7 @@ Keedi Kim - 김도형 <keedi@cpan.org>
 
 # COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2013 by Keedi Kim.
+This software is copyright (c) 2014 by Keedi Kim.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
