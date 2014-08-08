@@ -1,5 +1,15 @@
 Release history for Pod-Weaver-Section-Contributors
 
+0.008   2014-08-08 11:47:58 Asia/Seoul
+    - fix exception that occurs when not run via Dist::Zilla (ETHER)
+    - now also fetching contributors directly from Dist::Zilla
+      'x_contributors' metadata (ETHER)
+    - stopwords now passed to the [StopWords] plugin directly via =for
+      directives, which also lets Pod::Spell see them (without requiring the
+      plugin) (ETHER)
+    - no longer sorting the list of contributor names; the original ordering
+      from the various sources is respected (ETHER)
+
 0.007   2013-12-12 16:58:15 Asia/Seoul
     - avoid warning message when manipulating stopwords
 
