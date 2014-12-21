@@ -3,7 +3,6 @@ use Moose;
 with 'Pod::Weaver::Role::Section';
 # ABSTRACT: a section listing contributors
 
-use Moose::Autobox;
 use List::MoreUtils 'uniq';
 
 use Pod::Elemental::Element::Nested;
@@ -131,12 +130,12 @@ sub weave_section {
         Pod::Elemental::Element::Pod5::Command->new({
             command => 'over', content => '4',
         }),
-        $result->map(sub {
+        ( map {
             Pod::Elemental::Element::Pod5::Command->new({
                 command => 'item', content => '*',
             }),
             $_,
-        })->flatten,
+        } @$result ),
         Pod::Elemental::Element::Pod5::Command->new({
             command => 'back', content => '',
         }),
@@ -162,17 +161,16 @@ sub weave_section {
     #
 
     if ( $self->head ) {
-        $document->children->push(
+        push @{ $document->children },
             Pod::Elemental::Element::Nested->new({
                 type     => 'command',
                 command  => 'head' . $self->head,
                 content  => $name,
                 children => $result,
-            }),
-        );
+            });
     }
     else {
-        $document->children->push($_) for @$result;
+        push @{ $document->children }, @$result;
     }
 }
 
