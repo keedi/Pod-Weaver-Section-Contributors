@@ -1,5 +1,8 @@
 Release history for Pod-Weaver-Section-Contributors
 
+0.009   2014-12-22 11:51:10 Asia/Seoul
+    - remove the use of autobox (ETHER)
+
 0.008   2014-08-08 11:47:58 Asia/Seoul
     - fix exception that occurs when not run via Dist::Zilla (ETHER)
     - now also fetching contributors directly from Dist::Zilla
