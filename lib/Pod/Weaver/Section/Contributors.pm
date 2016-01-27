@@ -64,6 +64,20 @@ has all_modules => (
     default => 0,
 );
 
+=attr include_stopwords
+
+A boolean flag to turn on/off the inclusion of a list of stopwords compiled
+from the names of contributors. True by default.
+
+=cut
+
+has include_stopwords => (
+    is      => 'rw',
+    isa     => 'Bool',
+    lazy    => 1,
+    default => 0,
+);
+
 =for Pod::Coverage weave_section
 =cut
 
@@ -146,14 +160,16 @@ sub weave_section {
     # pass list of contributors to the StopWords plugin and Pod::Spell via directives
     #
 
-    my @stopwords = uniq
-        map { $_ ? split / / : ()    }
-        map { /^(.*?)(\s+<.*)?$/; $1 }
-        @contributors;
+    if( $self->include_stopwords ){
+        my @stopwords = uniq
+            map { $_ ? split / / : ()    }
+            map { /^(.*?)(\s+<.*)?$/; $1 }
+            @contributors;
 
-    unshift @$result, Pod::Elemental::Element::Pod5::Command->new({
-        command => 'for', content => join(' ', 'stopwords', @stopwords),
-    });
+        unshift @$result, Pod::Elemental::Element::Pod5::Command->new({
+            command => 'for', content => join(' ', 'stopwords', @stopwords),
+        });
+    }
 
 
     #
