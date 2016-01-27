@@ -75,7 +75,7 @@ has include_stopwords => (
     is      => 'rw',
     isa     => 'Bool',
     lazy    => 1,
-    default => 0,
+    default => 1,
 );
 
 =for Pod::Coverage weave_section
