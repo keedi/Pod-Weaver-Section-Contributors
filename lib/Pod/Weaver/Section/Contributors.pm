@@ -111,6 +111,12 @@ sub weave_section {
         push(@contributors, @$_contributors);
     }
 
+    ## get contributors from META.{json,yml}
+    if ($input->{meta}
+            and my $_contributors = $input->{meta}{x_contributors}) {
+        push(@contributors, @$_contributors);
+    }
+
     ## get contributors from source comments
     my $ppi_document = $input->{ppi_document};
     $ppi_document->find( sub {
