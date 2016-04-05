@@ -3,7 +3,7 @@ use Moose;
 with 'Pod::Weaver::Role::Section';
 # ABSTRACT: a section listing contributors
 
-use List::MoreUtils 'uniq';
+use List::Util 1.45 'uniq';
 
 use Pod::Elemental::Element::Nested;
 use Pod::Elemental::Element::Pod5::Verbatim;
