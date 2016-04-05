@@ -108,8 +108,8 @@ sub weave_section {
         return 0;
     });
 
-    ## remove repeated names
-    @contributors = uniq (@contributors);
+    ## remove repeated names and sort
+    @contributors = uniq sort (@contributors);
 
     return unless @contributors;
 

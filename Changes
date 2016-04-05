@@ -1,6 +1,7 @@
 Release history for Pod-Weaver-Section-Contributors
 
     - switch off of List::MoreUtils (ETHER)
+    - sort the contributors list (ETHER)
 
 0.009   2014-12-22 11:51:10 Asia/Seoul
     - remove the use of autobox (ETHER)
