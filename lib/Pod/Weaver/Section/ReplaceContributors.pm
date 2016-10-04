@@ -7,6 +7,7 @@ with 'Pod::Weaver::Role::SectionReplacer';
 sub mvp_multivalue_args { qw( contributors ) }
 sub default_section_name { 'CONTRIBUTORS' }
 # sub default_section_aliases { [ 'CONTRIBUTOR' ] }
+has '+include_stopwords' => ( default => 0 );
 
 no Moose;
 1;
@@ -41,6 +42,10 @@ and/or in the source of individual files:
 This section plugin provides the same behaviour as
 Pod::Weaver::Section::Contributors but with the
 Pod::Weaver::Role::SectionReplacer role applied.
+
+Pod::Weaver::Role::SectionReplacer does not play nicely with C<=for stopword>,
+so, unlink Pod::Weaver::Section::Contributors, stopwords are not added to the
+document when using Pod::Weaver::Section::ReplaceContributors.
 
 This section adds a listing of the documents contributors.  It expects a C<contributors>
 input parameter to be an arrayref of strings.  If no C<contributors> parameter is
