@@ -131,6 +131,9 @@ sub weave_section {
     ## remove repeated names and sort
     @contributors = uniq sort (@contributors);
 
+    #escape < and > signs around author emails for the Pod
+    s/\<(.*)\>/E\<lt\>$1E\<gt\>/ for @contributors;
+
     return unless @contributors;
 
     #
